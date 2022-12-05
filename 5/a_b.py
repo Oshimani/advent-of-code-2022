@@ -15,13 +15,20 @@ def get_instruction(line: str):
         "to": int(segments[5][:-1]),
     }
 
+# solution part A
+def process_instruction_a(instruction: dict):
+    to = instruction["to"] - 1
+    from_ = instruction["from"] - 1
+    for i in range(instruction["count"]):
+        stacks[to].append(stacks[from_].pop())
 
-def process_instruction(instruction: dict):
+# solution part B
+def process_instruction_b(instruction: dict):
     to = instruction["to"] - 1
     from_ = instruction["from"] - 1
     cargo = stacks[from_][-instruction["count"] :]
     stacks[to] += cargo
-    stacks[from_] = stacks[from_][:-instruction["count"]]
+    stacks[from_] = stacks[from_][: -instruction["count"]]
 
 
 def print_stacks(stacks: list):
@@ -57,11 +64,11 @@ with open("./5/input.txt") as f:
 
 print_stacks(stacks)
 for instruction in instructions:
-    # print(instruction)
-    process_instruction(instruction)
+    print(instruction)
+    process_instruction_a(instruction)
 print_stacks(stacks)
 
-output =""
+output = ""
 for stack in stacks:
-    output+=stack[-1]
+    output += stack[-1]
 print(output)
